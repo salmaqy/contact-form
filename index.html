@@ -80,15 +80,15 @@
       const message = document.getElementById("message").value;
 
       const { error } = await supabase
-        .from("Contacts")
-        .insert([{ name, email, message }]);
+  .from("Contacts")
+  .insert([{ name, email, message }]);
 
-      if (error) {
-        status.innerText = "Error sending message";
-      } else {
-        status.innerText = "Message sent!";
-        form.reset();
-      }
+if (error) {
+  console.error(error);
+  status.innerText = error.message;
+} else {
+  status.innerText = "Message sent!";
+}
     });
   </script>
 
