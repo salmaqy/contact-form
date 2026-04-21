@@ -72,22 +72,28 @@
     const form = document.getElementById("contact-form");
     const status = document.getElementById("status");
 
-    form.addEventListener("submit", async (e) => {
+   form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
       const message = document.getElementById("message").value;
 
-      const { error } = await supabase
-  .from("Contacts")
-  .insert([{ name, email, message }]);
+      const { data, error } = await supabase
+        .from("Contacts")
+        .insert([{ name, email, message }]);
 
-if (error) {
-  console.error(error);
-  status.innerText = error.message;
-} else {
-  status.innerText = "Message sent!";
+      // 🔍 DEBUG OUTPUT
+      console.log("DATA:", data);
+      console.log("ERROR:", error);
+
+      if (error) {
+        status.innerText = "Error: " + error.message;
+        status.style.color = "red";
+      } else {
+        status.innerText = "Message sent!";
+        status.style.color = "green";
+        form.reset();
 }
     });
   </script>
